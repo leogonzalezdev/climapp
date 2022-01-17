@@ -6,7 +6,17 @@ const closeMenu = document.querySelector('#close-menu');
 const detailsContenedor = document.querySelector('#details');
 const formulario = document.querySelector('#formulario');
 const nextDaysSection = document.querySelector('#next-days');
+const todayBtn = document.querySelector('#today');
+const tomorrowBtn = document.querySelector('#tomorrow');
 
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const time = new Date();
+
+let userLocation = {
+  latitude:' ',
+  longitude:' ',
+}
+let userClima = {}
 // Escuchas de eventos
 document.addEventListener('DOMContentLoaded', ()=>{
   geolocalizar();
@@ -15,12 +25,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
   menuBtn.addEventListener('click', ui.mostrarMenu);
   closeMenu.addEventListener('click', ui.mostrarMenu);
   formulario.addEventListener('submit', validarFormulario);
+  todayBtn.addEventListener('click', geolocalizar);
+  tomorrowBtn.addEventListener('click', ui.changeDay);
 });
 // geocaliza al usuario
 function geolocalizar(){
   navigator.geolocation.getCurrentPosition((success) => {
     let {latitude, longitude } = success.coords;
+    userLocation.latitude = latitude;
+    userLocation.longitude = longitude;
     buscarClima(latitude, longitude);
+    console.log(userLocation);
   });
 }
 class UI {
@@ -28,6 +43,7 @@ class UI {
     // Cuando el usuario solicita mas informacion del clima, esta funcion lo muestra
     detailsContenedor.classList.toggle('active');
   }
+
   // Muestra el menu
   mostrarMenu() {
     menu.classList.toggle('open');
@@ -40,34 +56,64 @@ class UI {
     this.datails(current);
     this.nextDays(daily);
   }
+
   iconPrincipal({weather}){
     const iconClima = document.querySelector('#icon-clima');
     switch (weather[0].main) {
       case 'Thunderstorm':
-        iconClima.src='../img/icons/thunder.svg'
-        break;
+      iconClima.src='../img/icons/thunder.svg'
+      break;
       case 'Drizzle':
-        iconClima.src='../img/icons/rainy-2.svg'
-        break;
+      iconClima.src='../img/icons/rainy-2.svg'
+      break;
       case 'Rain':
-        iconClima.src='../img/icons/rainy-7.svg'
-        break;
+      iconClima.src='../img/icons/rainy-7.svg'
+      break;
       case 'Snow':
-        iconClima.src='../img/icons/snowy-6.svg'
-        break;                        
+      iconClima.src='../img/icons/snowy-6.svg'
+      break;                        
       case 'Clear':
-          iconClima.src='../img/icons/day.svg'
-        break;
+      iconClima.src='../img/icons/day.svg'
+      break;
       case 'Atmosphere':
-        iconClima.src='../img/icons/weather.svg'
-          break;  
+      iconClima.src='../img/icons/weather.svg'
+      break;  
       case 'Clouds':
-          iconClima.src='../img/icons/cloudy-day-1.svg'
-          break;  
+      iconClima.src='../img/icons/cloudy-day-1.svg'
+      break;  
       default:
-        iconClima.src='../img/icons/cloudy-day-1.svg'
+      iconClima.src='../img/icons/cloudy-day-1.svg'
     }
   }
+        
+  iconNextDays({weather}){
+    switch (weather[0].main) {
+    case 'Thunderstorm':
+    return '../img/icons/thunder.svg'
+    break;
+    case 'Drizzle':
+    return '../img/icons/rainy-2.svg'
+    break;
+    case 'Rain':
+    return '../img/icons/rainy-7.svg'
+    break;
+    case 'Snow':
+    return '../img/icons/snowy-6.svg'
+    break;                        
+    case 'Clear':
+    return '../img/icons/day.svg'
+    break;
+    case 'Atmosphere':
+    return '../img/icons/weather.svg'
+    break;  
+    case 'Clouds': 
+    return '../img/icons/cloudy-day-1.svg'
+    break;  
+    default:
+     return '../img/icons/cloudy-day-1.svg'
+    }
+  }
+
   temperaturaPrincipal({temp}, timezone){
     const temperaturaMain = parseInt(temp);
     const temperaturaContainer = document.querySelector('#temperature');
@@ -78,38 +124,72 @@ class UI {
     timezone = timezone.replace('/', ', ');
     location.textContent = `${timezone}`;
   }
+
   minMaxTemperatura({temp:{min, max}}){
     const minContainer = document.querySelector('#min'); 
     const maxContainer = document.querySelector('#max'); 
-
+    
     const temperaturaMin = parseInt(min);
     const temperaturaMax = parseInt(max); 
-
+    
     minContainer.textContent = `${temperaturaMin}°C`;
     maxContainer.textContent = `${temperaturaMax}°C`;
   }
+
+  changeDay(){
+    let temp = userClima.daily[0].temp.day;
+    const temperaturaMain = parseInt(temp);
+    const temperaturaContainer = document.querySelector('#temperature');
+    temperaturaContainer.innerHTML = `${temperaturaMain} °C`;
+    
+    const min = userClima.daily[0].temp.min;
+    const max = userClima.daily[0].temp.max;
+
+    const minContainer = document.querySelector('#min'); 
+    const maxContainer = document.querySelector('#max'); 
+    
+    const temperaturaMin = parseInt(min);
+    const temperaturaMax = parseInt(max); 
+    
+    minContainer.textContent = `${temperaturaMin}°C`;
+    maxContainer.textContent = `${temperaturaMax}°C`;
+
+   const {wind_speed, feels_like:{day}, humidity, visibility} = userClima.daily[0];
+   document.querySelector('#wind').textContent = `${wind_speed} Km/h`;
+   document.querySelector('#feels-like').textContent = `${parseInt(day)} °C`;
+   document.querySelector('#humidity').textContent = `${humidity}%`;
+   document.querySelector('#visibility').textContent = `Desconocida`;
+
+  }
+
   datails({wind_speed, feels_like, humidity, visibility}){
     document.querySelector('#wind').textContent = `${wind_speed} Km/h`;
     document.querySelector('#feels-like').textContent = `${parseInt(feels_like)} °C`;
     document.querySelector('#humidity').textContent = `${humidity}%`;
     document.querySelector('#visibility').textContent = `${visibility / 100}Km`;
   }
-  nextDays(daily){
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const time = new Date();
-    let diaActual = time.getDay();
 
+  nextDays(daily){
+    let diaActual = time.getDay();
     daily.forEach((dia, index) => {
       if (diaActual <= 6) {
+        const iconSrc = ui.iconNextDays(dia);
         const { temp } = dia;
         const cardDiv = document.createElement('div');
-        cardDiv.classList.add('card');
+        cardDiv.classList.add('card', 'card-next-day');
         cardDiv.innerHTML = `
-          <p style="color:white;" class="mm-text">${days[diaActual]}</p>
-          <p style="color:white;" class="temperature ">${parseInt(temp.day)}°C</p>
+          <div class="card-header">
+            <p style="color:white;" class="mm-text day-text">${days[diaActual]}</p>
+            <img src="${iconSrc}" class="icon-day">
+          </div>
+          <div class="card-body">
+            <p style="color:white;" class="text">${parseInt(temp.min)}°C</p>
+            <p style="color:white;" class="text">${parseInt(temp.max)}°C</p>
+          </div>
         `;
         diaActual = diaActual + 1 ;
         nextDaysSection.appendChild(cardDiv);
+        
       }else{
         diaActual = 0;
       }
@@ -147,9 +227,10 @@ function buscarClima(latitude, longitude) {
         formulario.reset();
         return ;
       }
-      console.log(clima)
+      userClima = clima;
       formulario.reset();
       ui.mostrarClima(clima);
+      console.log(userClima)
     });
 
   // const urlDaily = `https://api.openweathermap.org/data/2.5/onecall?q=${ciudad},${pais}&exclude=hourly,daily&appid=${appId}`;
@@ -161,3 +242,4 @@ function buscarClima(latitude, longitude) {
   //   })
 
 }
+
