@@ -214,8 +214,13 @@ function validarFormulario(e){
     buscarClima(ciudad, pais);
   }
 }
-
+function limpiarHTML() {
+  while (nextDaysSection.firstChild) {
+    nextDaysSection.firstChild.remove();
+  }
+}
 function buscarClima(latitude, longitude) {
+  limpiarHTML();
   const appId = '374cff81c8e08b2c83935fcdbcde0b43';
   const urlDay = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${appId}`;
   
