@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- PARA CUALQUIER NAVEGADOR -->
+  <link rel="icon" href="./img/favicon-32x32.png" sizes="32x32" type="image/png">
+  <!-- PARA LOS MODELOS MAS RECIENTES DE IPAD Y IPHONE -->
+  <link rel="apple-touch-icon-precomposed" href="./img/apple-icon-152x152.png" type="image/png" sizes="152x152">
+  <link rel="apple-touch-icon-precomposed" href="./img/apple-icon-120x120.png" type="image/png" sizes="120x120">
+  <!-- PARA GOOGLE TV -->
+  <link rel="icon" href="./img/favicon-96x96.png" sizes="96x96" type="image/png">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClimApp - Conocé el clima en tu ciudad</title>
+  <meta name="description"
+    content="ClimApp es una aplicación en donde podes ver en tiempo real el clima de las ciudades de 7 países diferentes.">
+  <link rel="stylesheet" href="./css/styles.css">
+  <!-- Animation library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  </head>
+<body>
+  <!-- Contenedor de la app -->
+  <div class="container">
+    <!-- Header -->
+    <header class="header" id="header">
+      <!-- Burger Menu -->
+      <div class="burger-menu" id="menu-btn">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div> 
+      <h3 class="logo-text">ClimApp</h3>
+    </header>
+
+    <!-- Menu -->
+    <div class="menu" id="menu">
+      <h3 class="logo-text">ClimApp</h3>
+      
+      <div class="close-btn" id="close-menu">
+        <div class="close-line"></div>
+        <div class="close-line"></div>
+      </div>
+
+      <div class="formulario-container">
+        <form action="#" method="POST" class="formulario" id="formulario">
+          <div class="row">
+            <p>Agrega tu ciudad y país</p>
+            <input type="text" name="ciudad" id="ciudad" placeholder="Escribe tu Ciudad" class="input"/>
+            <select class="input" id="pais">
+              <option disabled selected value="">-- Seleccione --</option>
+              <option value="AR">Argentina</option>
+              <option value="CO">Colombia</option>
+              <option value="CR">Costa Rica</option>
+              <option value="ES">España</option>
+              <option value="US">Estados Unidos</option>
+              <option value="MX">México</option>
+              <option value="PE">Perú</option>
+            </select>
+            <button type="submit">Obtener Clima</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- <input type="search"> -->
+    </div>
+    <!-- Temperatura principal -->
+    <main class="hero" id="hero">
+        <img id="icon-clima" src="./img/icono-clima.png" alt="Nublado">
+        <p class="temperature" id="temperature">0°C</p>
+        <p class="location" id="location">City, Country</p>
+    </main>
+
+    <!-- Navigation bar -->
+    <nav class="navbar" id="navbar">
+      <a href="#" class="nav-link">Today</a>
+      <a href="#" class="nav-link">Tomorrow</a>
+    </nav>
+
+    <!-- Min and Max temperature -->
+    <section class="max-min" id="max-min">
+      <div class="card min">
+        <p class="mm-text">Min</p>
+        <p style="color:white;" class="temperature" id="min">0°C</p>
+      </div>
+      <div class="card max">
+        <p class="mm-text">Max</p>
+        <p style="color:white;" class="temperature" id="max">0°C</p>
+      </div>
+    </section>
+
+    <div class="more-info">
+      <a href="#" class="nav-link" id="more">More info</a>
+
+      <div class="details animate__animated  animate__fadeInUp animate__faster" id="details">
+        <div class="close-btn" id="close-btn">
+          <div class="close-line"></div>
+          <div class="close-line"></div>
+        </div>
+        <div class="col">
+          <p class="mm-text">Wind: <span id="wind" class="nav-link">0m/h</span></p>
+          <p class="mm-text">Feels like: <span id="feels-like" class="nav-link">0°C</span></p>
+        </div>
+        <div class="col">
+          <p class="mm-text">Humidity: <span id="humidity" class="nav-link">0%</span></p>
+          <p class="mm-text">Visibility: <span id="visibility" class="nav-link">0 Km</span></p>
+        </div>
+      </div>
+
+    </div>
+    <!-- Next Days Section -->
+    <h4 class="title-2" >Next 7 days</h4>
+    <section class="next-days" id="next-days"></section>
+    <footer class="footer" id="footer">
+      <p class="with-love">with love by <a href="#" class="nav-link">leogonzalezok</a></p>
+    </footer>
+  </div>
+
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
