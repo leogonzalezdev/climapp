@@ -16,6 +16,10 @@
 }
 html{
   scroll-behavior: smooth;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; 
 }
 body{
   background: var(--white);
@@ -68,6 +72,7 @@ body{
   display: none;
   opacity: 0;
   position: fixed;
+  left: 0;
   top: 0;
   z-index: 300;
   width: 100%;
@@ -92,6 +97,7 @@ body{
   color: var(--black);
 }
 .btn{
+  cursor: pointer;
   padding: 15px 30px;
   margin-top: 20px;
   border: none;
@@ -100,12 +106,16 @@ body{
   background: linear-gradient(to right , var(--salmon), var(--salmon-dark));
   transition: all 1s;
 }
+.btn:hover{
+  transform: scale(1.1);
+}
 .btn-dark{
   background: linear-gradient(to right , var(--violet), var(--violet-dark));
 }
 .btn-light{
   background: linear-gradient(to right , var(--salmon), var(--salmon-dark));
 }
+
 .row{
   display: flex;
   align-items: center;
@@ -240,6 +250,7 @@ body{
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  max-width: 768px;
   /* animation: up 600ms linear 1; */
   margin-bottom: 110px;
   box-shadow: 0px 8px 6px rgba(0, 0, 0, .2), 0px 8px 6px rgba(0, 0, 0, .2);
@@ -408,4 +419,13 @@ body.dark .burger-menu .line{
 }
 body.dark .menu{
   background: linear-gradient(to top ,var(--dark), var(--grey));
+}
+body.dark .nav-link:hover{
+  color: var(--white);
+}
+body.dark .nav-link:active{
+  color: var(--white);
+}
+body.dark .with-love{
+  color: var(--white);
 }

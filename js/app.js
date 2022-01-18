@@ -18,6 +18,8 @@ let userLocation = {
   longitude:' ',
 }
 let userClima = {}
+
+let dark = true;
 // Escuchas de eventos
 document.addEventListener('DOMContentLoaded', ()=>{
   geolocalizar();
@@ -45,6 +47,13 @@ class UI {
     document.querySelector('body').classList.toggle('dark');
     themeBtn.classList.toggle('btn-dark');
     themeBtn.classList.toggle('btn-light');
+    if (dark) {
+      themeBtn.textContent = 'Light Mode';
+      dark = false;
+    } else {
+      themeBtn.textContent = 'Dark Mode';
+      dark = true;
+    }
   }
   mostrarMasInfo() {
     // Cuando el usuario solicita mas informacion del clima, esta funcion lo muestra
