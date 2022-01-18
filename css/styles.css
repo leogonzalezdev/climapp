@@ -3,7 +3,7 @@
 :root{
   --white: #f9f9f9;
   --black:#070707;
-  --dark:#020202;
+  --dark:#1a1a1a;
   --grey:#838383;
   --violet:#b3aafd;
   --violet-dark:#a098ee;
@@ -74,7 +74,7 @@ body{
   height: 100vh;
   background: linear-gradient(to top , #bdbdbd, var(--white));
   transition: all 1s;
-  animation: openMenu linear 600ms;
+  animation: openMenu linear 400ms;
 }
 .open{
   display: block;
@@ -91,7 +91,22 @@ body{
   text-align: center;
   color: var(--black);
 }
-.formulario .row{
+.btn{
+  padding: 15px 30px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 15px;
+  color: var(--white);
+  background: linear-gradient(to right , var(--salmon), var(--salmon-dark));
+  transition: all 1s;
+}
+.btn-dark{
+  background: linear-gradient(to right , var(--violet), var(--violet-dark));
+}
+.btn-light{
+  background: linear-gradient(to right , var(--salmon), var(--salmon-dark));
+}
+.row{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -304,13 +319,12 @@ body{
 } 
 
 .next-days::-webkit-scrollbar:horizontal {
-  height: 6px;
+  height: 4px;
 }
 
 .next-days::-webkit-scrollbar-thumb {
   background-color: var(--grey);
   border-radius: 35px;
-  border: 2px solid #f1f2f3;
 }
 
 .next-days::-webkit-scrollbar-track {
@@ -366,4 +380,32 @@ body{
   font-family:'Archivo', sans-serif ;
   font-style: italic;
   margin: 1.5em auto;
+}
+/* dark mode */
+body.dark{
+  background: var(--dark);
+}
+body.dark .container{
+  background: var(--dark);
+}
+body.dark .logo-text{
+  color: var(--white);
+}
+body.dark .temperature{
+  color: var(--white);
+}
+body.dark .card{
+  box-shadow:2px 2px 5px rgba(255, 255, 255, .2), 2px 2px 5px rgba(255, 255, 255, .2);
+}
+body.dark .title-2{
+  color: var(--white);
+}
+body.dark .next-days::-webkit-scrollbar-thumb {
+  background-color: var(--white);
+}
+body.dark .burger-menu .line{
+  background: var(--white);
+}
+body.dark .menu{
+  background: linear-gradient(to top ,var(--dark), var(--grey));
 }

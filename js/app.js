@@ -8,6 +8,7 @@ const formulario = document.querySelector('#formulario');
 const nextDaysSection = document.querySelector('#next-days');
 const todayBtn = document.querySelector('#today');
 const tomorrowBtn = document.querySelector('#tomorrow');
+const themeBtn = document.querySelector('#theme-btn');
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const time = new Date();
@@ -24,9 +25,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
   closeMoreInfoBtn.addEventListener('click', ui.mostrarMasInfo);
   menuBtn.addEventListener('click', ui.mostrarMenu);
   closeMenu.addEventListener('click', ui.mostrarMenu);
-  formulario.addEventListener('submit', validarFormulario);
+  // formulario.addEventListener('submit', validarFormulario);
   todayBtn.addEventListener('click', geolocalizar);
   tomorrowBtn.addEventListener('click', ui.changeDay);
+  themeBtn.addEventListener('click', ui.changeTheme)
 });
 // geocaliza al usuario
 function geolocalizar(){
@@ -35,10 +37,15 @@ function geolocalizar(){
     userLocation.latitude = latitude;
     userLocation.longitude = longitude;
     buscarClima(latitude, longitude);
-    console.log(userLocation);
+    // console.log(userLocation);
   });
 }
 class UI {
+  changeTheme(){
+    document.querySelector('body').classList.toggle('dark');
+    themeBtn.classList.toggle('btn-dark');
+    themeBtn.classList.toggle('btn-light');
+  }
   mostrarMasInfo() {
     // Cuando el usuario solicita mas informacion del clima, esta funcion lo muestra
     detailsContenedor.classList.toggle('active');
@@ -209,7 +216,7 @@ function validarFormulario(e){
   const ciudad = document.querySelector('#ciudad').value;
   const pais = document.querySelector('#pais').value;
   if (ciudad === '' || pais === '') {
-    console.log('Ambos campos son obligatorios');
+    alert('Ambos campos son obligatorios');
   } else {
     buscarClima(ciudad, pais);
   }
@@ -228,14 +235,14 @@ function buscarClima(latitude, longitude) {
     .then ( resultado => resultado.json())
     .then ( clima =>{
       if (clima.cod === '404') {
-        console.log('Ciudad no encontrada');
-        formulario.reset();
+        alert('Ciudad no encontrada');
+        // formulario.reset();c
         return ;
       }
       userClima = clima;
-      formulario.reset();
+      // formulario.reset();
       ui.mostrarClima(clima);
-      console.log(userClima)
+      // console.log(userClima)
     });
 
   // const urlDaily = `https://api.openweathermap.org/data/2.5/onecall?q=${ciudad},${pais}&exclude=hourly,daily&appid=${appId}`;
