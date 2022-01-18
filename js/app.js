@@ -153,13 +153,13 @@ class UI {
   }
 
   changeDay(){
-    let temp = userClima.daily[0].temp.day;
+    let temp = userClima.daily[1].temp.day;
     const temperaturaMain = parseInt(temp);
     const temperaturaContainer = document.querySelector('#temperature');
     temperaturaContainer.innerHTML = `${temperaturaMain} °C`;
     
-    const min = userClima.daily[0].temp.min;
-    const max = userClima.daily[0].temp.max;
+    const min = userClima.daily[1].temp.min;
+    const max = userClima.daily[1].temp.max;
 
     const minContainer = document.querySelector('#min'); 
     const maxContainer = document.querySelector('#max'); 
